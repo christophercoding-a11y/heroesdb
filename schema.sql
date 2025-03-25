@@ -36,6 +36,32 @@ CREATE TABLE hero (
     CONSTRAINT fk_species FOREIGN KEY (species_id) REFERENCES species (species_id)
 );
 
+CREATE TABLE power (
+    power_id TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
+    power VARCHAR(50),
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT pk_power PRIMARY KEY (power_id)
+);
+
+CREATE TABLE hero_to_power (
+    hero_id SMALLINT UNSIGNED NOT NULL,
+    power_id TINYINT UNSIGNED NOT NULL,
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_hero_hp FOREIGN KEY (hero_id) REFERENCES hero (hero_id),
+    CONSTRAINT fk_power_hp FOREIGN KEY (power_id) REFERENCES power (power_id)
+);
+
+CREATE TABLE hero_to_rival (
+    hero_id SMALLINT UNSIGNED NOT NULL,
+    rival_id SMALLINT UNSIGNED NOT NULL, 
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_hero_hr FOREIGN KEY (hero_id) REFERENCES hero (hero_id),
+    CONSTRAINT fk_rival_hr FOREIGN KEY (rival_id) REFERENCES hero (hero_id)
+);
+
 -- ALTERS
 ALTER TABLE franchise
     ADD COLUMN yr_defunct YEAR;
