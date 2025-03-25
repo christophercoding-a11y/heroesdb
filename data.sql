@@ -112,6 +112,16 @@ VALUES
 (25, 6), (25, 13), (25, 24),
 (26, 10);
 
+INSERT INTO hero_to_rival (hero_id, rival_id)
+VALUES
+(1, 7), (1, 23);
+
+INSERT INTO hero_to_rival (hero_id, rival_id)
+VALUES
+(7, 1), (23, 1);
+
+
+
 
 
 -- UPDATE
@@ -124,3 +134,11 @@ SET alias = 'TRAPSTER'
 WHERE hero_id = 26;
 
 update hero set hero_name = 'VENOM' WHERE hero_id = 5;
+
+-- QUERIES
+
+select h1.hero_name hero, h2.hero_name rival
+from hero_to_rival hr
+join hero h1 on h1.hero_id = hr.hero_id
+join hero h2 on h2.hero_id = hr.rival_id
+where h1.hero_id = 7;
