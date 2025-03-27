@@ -62,6 +62,21 @@ CREATE TABLE hero_to_rival (
     CONSTRAINT fk_rival_hr FOREIGN KEY (rival_id) REFERENCES hero (hero_id)
 );
 
+CREATE TABLE team (
+    team_id TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
+    team VARCHAR(40),
+    base VARCHAR(40),
+    yr_created YEAR,
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT pk_team PRIMARY KEY (team_id)
+);
+
 -- ALTERS
 ALTER TABLE franchise
     ADD COLUMN yr_defunct YEAR;
+
+
+SET @num := 0;
+UPDATE hero SET hero_id = @num := (@num + 1);
+ALTER TABLE hero AUTO_INCREMENT = 1
