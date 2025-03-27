@@ -72,6 +72,15 @@ CREATE TABLE team (
     CONSTRAINT pk_team PRIMARY KEY (team_id)
 );
 
+CREATE TABLE hero_to_team (
+    hero_id SMALLINT UNSIGNED NOT NULL,
+    team_id TINYINT UNSIGNED NOT NULL,
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_hero_t FOREIGN KEY (hero_id) REFERENCES hero (hero_id),
+    CONSTRAINT fk_team_t FOREIGN KEY (team_id) REFERENCES team (team_id)
+);
+
 -- ALTERS
 ALTER TABLE franchise
     ADD COLUMN yr_defunct YEAR;

@@ -602,6 +602,9 @@ SET alias = 'TRAPSTER'
 WHERE hero_id = 26;
 
 update hero set hero_name = 'VENOM' WHERE hero_id = 5;
+update hero_to_team
+set team_id = 5
+where hero_id = 100 and team_id = 1;
 
 -- QUERIES
 
@@ -766,3 +769,20 @@ VALUES
 ('BLADE', 'ERIC', 'BROOKS', 'FRANK BLADE', 4, 6, 'LONDON', 1973),
 ('GHOST RIDER', 'JOHNNY', 'BLAZE', 'ZARATHOS', 4, 6, 'WAUKEGAN, IL', 1972),
 ('MAGIK', 'ILLYANA', 'RASPUTINA', 'DARK CHILD', 4, 7, 'RUSSIA', 1975);
+
+INSERT INTO hero_to_team (hero_id, team_id)
+VALUES
+(1, 2), (1, 8);
+
+INSERT INTO hero_to_team (hero_id, team_id)
+VALUES
+(91, 19),
+(92, 19),
+(93, 19),
+(94, 19),
+(95, 20), (95, 1),
+(96, 20),
+(97, 20),
+(98, 1), (98, 22),
+(99, 22), (99, 6), (99, 1),
+(100, 22), (100, 1);
