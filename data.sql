@@ -166,6 +166,12 @@ VALUES
 
 INSERT INTO hero_to_rival (hero_id, rival_id)
 VALUES
+(11,34);
+
+
+
+INSERT INTO hero_to_rival (hero_id, rival_id)
+VALUES
 (12, 31), (31, 12);
 
 INSERT INTO hero_to_rival (hero_id, rival_id)
@@ -605,6 +611,30 @@ update hero set hero_name = 'VENOM' WHERE hero_id = 5;
 update hero_to_team
 set team_id = 5
 where hero_id = 100 and team_id = 1;
+update hero_to_power
+set hero_id = 32 
+where power_id = 19 and hero_id = 31;
+
+update hero
+set alignment = 'ANTIHERO'
+where hero_id in (4, 6, 10, 22, 32, 36, 41, 42, 43, 44, 45, 48, 52, 58, 78, 79, 80, 81, 99);
+
+update hero
+set alignment = 'ANTIHERO'
+where hero_id = 100;
+
+update hero
+set alignment = 'VILLAIN'
+where hero_id in (7, 23, 24, 26, 27, 28, 29, 30, 31, 33, 34, 35, 37, 38, 40, 60, 61, 70, 71, 72, 73, 74, 75, 76, 77, 89, 90, 95, 96, 97);
+
+update hero
+set hero_name = NULL
+where hero_id = 37;
+
+update hero
+set franchise_id = 3
+where hero_id = 27;
+
 
 -- QUERIES
 
@@ -786,3 +816,84 @@ VALUES
 (98, 1), (98, 22),
 (99, 22), (99, 6), (99, 1),
 (100, 22), (100, 1);
+
+INSERT hero_to_rival(hero_id, )
+
+-- RETURNING EVERY HERO THAT WAS AN AVENGER
+select h.hero_name, t.team
+from hero h
+join hero_to_team ht on h.hero_id = ht.hero_id
+join team t on t.team_id = ht.team_id
+where t.team = 'AVENGERS'
+group by h.hero_name, t.team;
+
+-- RETURN EVERY TEAM THAT WOLVERINE THAT WAS IN 
+select h.hero_name, t.team
+from hero h 
+join hero_to_team ht on h.hero_id = ht.hero_id
+join team t on t.team_id = ht.team_id
+where h.hero_name = 'BATMAN';
+
+-- RETURN EVERY CHARACTER THAT HAS SUPER STRENGTH
+select h.hero_name, p.power
+from hero h
+join hero_to_power hp on h.hero_id = hp.hero_id
+join power p on p.power_id = hp.power_id
+where p.power = 'STRENGTH';
+
+-- RETURN EVERY CHARACTER THAT IS IN MARVEL
+select h.hero_id, h.hero_name, h.first_name, h.last_name, f.franchise
+from hero h
+join franchise f using (franchise_id)
+where franchise = 'MARVEL';
+
+
+-- RETURN EVERY MEMBER OF TEENAGE MUTANT NINJA TURTLES
+select h.hero_name, t.team
+from hero h
+join hero_to_team ht on h.hero_id = ht.hero_id
+join team t on t.team_id = ht.team_id
+where t.team = 'TEENAGE MUTANT NINJA TURTLES';
+
+-- RETURN THE RIVALS OF IRONMAN
+select h.hero_name ironmans_rivals
+from hero h
+join hero_to_rival hr on h.hero_id = hr.rival_id
+where hr.hero_id = 11;
+
+-- RETURN EVERY HERO THAT HAS THE POWER OF FLIGHT
+select h.hero_name, p.power
+from hero h
+join hero_to_power hp on h.hero_id = hp.hero_id
+join power p on p.power_id = hp.power_id
+where p.power = 'FLIGHT';
+
+-- RETURN EVERY HERO DC CHARACTER CREATED AFTER 1950
+select h.hero_name, h.first_name, h.last_name, f.franchise, h.first_app
+from hero h
+join franchise f using (franchise_id)
+where f.franchise = 'DC' and h.first_app > 1950
+order by h.first_app DESC;
+
+-- RETURN EVERY HERO THAT HAS 'MAN' ITS NAME
+select hero_name
+from hero
+where hero_name like '%MAN%';
+
+select
+    case
+        when h.hero_name is not null then h.hero_name
+        else concat(h.first_name, ' ', h.last_name)
+    end hero_name,
+s.species
+from hero h
+join species s using (species_id)
+where s.species = 'HUMAN';
+
+
+-- return the total number of heroes from each franchise
+select f.franchise, count(h.franchise_id) total_heroes
+from franchise f
+join hero h using (franchise_id)
+group by h.franchise_id;
+

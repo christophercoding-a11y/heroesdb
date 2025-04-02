@@ -85,6 +85,10 @@ CREATE TABLE hero_to_team (
 ALTER TABLE franchise
     ADD COLUMN yr_defunct YEAR;
 
+ALTER TABLE hero
+    ADD COLUMN alignment ENUM('HERO', 'ANTIHERO', 'VILLAIN') DEFAULT 'HERO',
+    ADD COLUMN img_url MEDIUMTEXT;
+
 
 SET @num := 0;
 UPDATE hero SET hero_id = @num := (@num + 1);
